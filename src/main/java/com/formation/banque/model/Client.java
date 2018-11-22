@@ -5,7 +5,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Client {
@@ -19,7 +19,7 @@ public class Client {
 	
 	private String nom;
 	
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.ALL)
     private Compte compte;
 
 	public Client(Long code, String nom) {
