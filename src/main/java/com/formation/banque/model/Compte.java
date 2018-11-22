@@ -1,6 +1,7 @@
 package com.formation.banque.model;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorColumn;
@@ -11,26 +12,33 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "operation_type", discriminatorType = DiscriminatorType.STRING)
-public abstract class Operation {
+@DiscriminatorColumn(name = "compte_type", discriminatorType = DiscriminatorType.STRING)
+public abstract class Compte {
 
 	@Id
 	@GeneratedValue
 	private Long id;
 
-	private Long numOperation;
+	private String numCompte;
 
 	@Temporal(TemporalType.DATE)
 	private Date dateOperation;
 
-	private Double montant;
+	private Double solde;
+
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Operation> operations;
+
+	@ManyToOne(cascade = CascadeType.ALL)
+	private Client client;
 	
-	@ManyToOne(cascade=CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.ALL)
 	private Employe employe;
 
 	public Employe getEmploye() {
@@ -41,15 +49,31 @@ public abstract class Operation {
 		this.employe = employe;
 	}
 
-	public Operation() {
+	public Client getClient() {
+		return client;
+	}
+
+	public void setClient(Client client) {
+		this.client = client;
+	}
+
+	public List<Operation> getOperations() {
+		return operations;
+	}
+
+	public void setOperations(List<Operation> operations) {
+		this.operations = operations;
+	}
+
+	public Compte() {
 
 	}
 
-	public Operation(Long numOperation, Date dateOperation, Double montant) {
+	public Compte(String numCompte, Date dateOperation, Double solde) {
 		super();
-		this.numOperation = numOperation;
+		this.numCompte = numCompte;
 		this.dateOperation = dateOperation;
-		this.montant = montant;
+		this.solde = solde;
 	}
 
 	public Long getId() {
@@ -60,12 +84,12 @@ public abstract class Operation {
 		this.id = id;
 	}
 
-	public Long getNumOperation() {
-		return numOperation;
+	public String getNumCompte() {
+		return numCompte;
 	}
 
-	public void setNumOperation(Long numOperation) {
-		this.numOperation = numOperation;
+	public void setNumCompte(String numCompte) {
+		this.numCompte = numCompte;
 	}
 
 	public Date getDateOperation() {
@@ -76,12 +100,12 @@ public abstract class Operation {
 		this.dateOperation = dateOperation;
 	}
 
-	public Double getMontant() {
-		return montant;
+	public Double getSolde() {
+		return solde;
 	}
 
-	public void setMontant(Double montant) {
-		this.montant = montant;
+	public void setSolde(Double solde) {
+		this.solde = solde;
 	}
 
 }
