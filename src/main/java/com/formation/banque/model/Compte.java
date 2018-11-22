@@ -1,5 +1,6 @@
 package com.formation.banque.model;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -33,7 +34,7 @@ public abstract class Compte {
 	private Double solde;
 
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<Operation> operations;
+	private List<Operation> operations = new ArrayList<>();
 
 	@ManyToOne(cascade = CascadeType.ALL)
 	private Client client;

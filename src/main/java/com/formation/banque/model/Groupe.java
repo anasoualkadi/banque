@@ -27,16 +27,16 @@ public class Groupe {
 		super();
 	}
 
+	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	@JoinTable(name = "groupe_employes", joinColumns = { @JoinColumn(name = "groupe_id") }, inverseJoinColumns = {
+			@JoinColumn(name = "employe_id") })
+	private Set<Employe> tags = new HashSet<>();
+
 	public Groupe(Long codeEmploye, String nomEmploye) {
 		super();
 		this.codeEmploye = codeEmploye;
 		this.nomEmploye = nomEmploye;
 	}
-
-	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-	@JoinTable(name = "groupe_employes", joinColumns = { @JoinColumn(name = "groupe_id") }, inverseJoinColumns = {
-			@JoinColumn(name = "employe_id") })
-	private Set<Employe> tags = new HashSet<>();
 
 	public Long getId() {
 		return id;

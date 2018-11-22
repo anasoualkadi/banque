@@ -1,5 +1,6 @@
 package com.formation.banque.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -15,14 +16,14 @@ public class Client {
 	@Id
 	@GeneratedValue
 	private Long id;
-	
-	@Column(updatable=false, nullable=false)
+
+	@Column(updatable = false, nullable = false)
 	private Long code;
-	
+
 	private String nom;
-	
+
 	@OneToMany(cascade = CascadeType.ALL)
-    private List<Compte> compte;
+	private List<Compte> compte = new ArrayList<>();
 
 	public Client(Long code, String nom) {
 		super();
@@ -54,16 +55,12 @@ public class Client {
 		this.nom = nom;
 	}
 
-	public Compte getCompte() {
+	public List<Compte> getCompte() {
 		return compte;
 	}
 
-	public void setCompte(Compte compte) {
+	public void setCompte(List<Compte> compte) {
 		this.compte = compte;
 	}
-	
-	
-	
-    
-	
+
 }
